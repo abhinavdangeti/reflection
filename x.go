@@ -46,29 +46,29 @@ func (x X) SizeReflect() int {
 
 func getSizeViaReflection(x reflect.Value, rv int) int {
 	switch x.Kind() {
-		case reflect.Struct:
-			for i := 0; i < x.NumField(); i++ {
-				rv = getSizeViaReflection(x.Field(i), rv)
-			}
-		case reflect.Ptr:
-			rv += 8
-			rv = getSizeViaReflection(x.Elem(), rv)
-		case reflect.Slice:
-			rv += 24
-			for i := 0; i < x.Len(); i++ {
-				rv = getSizeViaReflection(x.Index(i), rv)
-			}
-		case reflect.Map:
-			rv += 8
-			keys := x.MapKeys()
-			for _, entry := range keys {
-				rv = getSizeViaReflection(entry, rv)
-				rv = getSizeViaReflection(x.MapIndex(entry), rv)
-			}
-		case reflect.String:
-			rv += 16 + x.Len()
-		case reflect.Uint64, reflect.Int, reflect.Float64:
-			rv += 8
+	case reflect.Struct:
+		for i := 0; i < x.NumField(); i++ {
+			rv = getSizeViaReflection(x.Field(i), rv)
+		}
+	case reflect.Ptr:
+		rv += 8
+		rv = getSizeViaReflection(x.Elem(), rv)
+	case reflect.Slice:
+		rv += 24
+		for i := 0; i < x.Len(); i++ {
+			rv = getSizeViaReflection(x.Index(i), rv)
+		}
+	case reflect.Map:
+		rv += 8
+		keys := x.MapKeys()
+		for _, entry := range keys {
+			rv = getSizeViaReflection(entry, rv)
+			rv = getSizeViaReflection(x.MapIndex(entry), rv)
+		}
+	case reflect.String:
+		rv += 16 + x.Len()
+	case reflect.Uint64, reflect.Int, reflect.Float64:
+		rv += 8
 	}
 	return rv
 }

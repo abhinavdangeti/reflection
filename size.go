@@ -1,7 +1,7 @@
 package reflection
 
 import (
-//	"fmt"
+	//"fmt"
 	"reflect"
 )
 
@@ -121,19 +121,19 @@ func buildDynamic(t reflect.Type, rv []dynamicSizeFunc, index int) []dynamicSize
 		rv = buildDynamic(t.Elem(), rv, index)
 	case reflect.Slice:
 		rv = append(rv, buildDynamicForField(dynamicSizeSlice, index))
-//		fmt.Println(t.Kind().String(), " : ", index)
+		//fmt.Println(t.Kind().String(), " : ", index)
 		rv = buildDynamic(t.Elem(), rv, index)
 	case reflect.Map:
 		rv = append(rv, buildDynamicForField(dynamicSizeMap, index))
-//		fmt.Println(t.Kind().String(), " : ", index)
+		//fmt.Println(t.Kind().String(), " : ", index)
 		rv = buildDynamic(t.Key(), rv, index)
 		rv = buildDynamic(t.Elem(), rv, index)
 	case reflect.String:
 		rv = append(rv, buildDynamicForField(dynamicSizeString, index))
-//		fmt.Println(t.Kind().String(), " : ", index)
+		//fmt.Println(t.Kind().String(), " : ", index)
 	case reflect.Uint64, reflect.Int, reflect.Float64:
 		rv = append(rv, buildDynamicForField(dynamicSizeNumber, index))
-//		fmt.Println(t.Kind().String(), " : ", index)
+		//fmt.Println(t.Kind().String(), " : ", index)
 	}
 
 	return rv
